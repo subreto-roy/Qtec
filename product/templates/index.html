@@ -1,0 +1,144 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Product Category Page</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        .old-price {
+    text-decoration: line-through;
+    color: rgb(12, 12, 12);
+}
+.New-price {
+    
+    color: rgb(221, 17, 17);
+}
+.price-range {
+  display: flex;
+  align-items: center;
+}
+
+.input-group {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-right: 10px;
+}
+
+.input-group label {
+  margin-right: 5px;
+}
+
+    </style>
+
+<script>
+   function filterProducts() {
+        var selectedCategories = [];
+        $("input[name='category']:checked").each(function () {
+            selectedCategories.push($(this).val());
+        });
+
+        $.ajax({
+            url: product_category_view,  
+            type: "GET",
+            data: {categories: selectedCategories},
+            success: function (data) {
+                $(".product-list").html(data);
+            },
+            error: function (xhr, textStatus, errorThrown) {
+                console.log("Error: " + errorThrown);
+            }
+        });
+    }
+</script>
+</head>
+
+<body>
+    <div class="container1" style="width: 100%;">
+        <img src="{% static 'image/capture.png' %}" alt="Image" style="width: 100%; height:150px;">
+    </div>
+    <h2>EARPHONE HAS {{ products|length }} PRODUCTS</h2> 
+<div class="container">
+  
+    <!-- Filters -->
+    <div class="filters">
+        <form action="" method="GET">
+            <label>Price</label>
+            <div class="price-range">
+                <div class="input-group">
+                    <label for="low-price"></label>
+                    <input style="width: 80%;" type="number" id="low-price" name="low_price" placeholder="">
+                </div>
+                To
+                <div class="input-group">
+                    <label for="high-price"></label>
+                    <input style="width: 80%;" type="number" id="high-price" name="high_price" placeholder="">
+                </div>
+                <input style="background-color: red;" type="submit" value="Go">
+            </div>
+           
+            
+            <label>Category:</label>
+            {% for category in categories %}
+                <div>
+                    <input type="checkbox" id="category-{{ category.id }}" name="category" value="{{ category.id }}">
+                    <label for="category-{{ category.id }}">{{ category.name }}</label>
+                </div>
+            {% endfor %}
+
+            <label>Brand:</label>
+            {% for brand in brands %}
+                <div>
+                    <input type="checkbox" id="brand-{{ brand.id }}" name="brand" value="{{ brand.id }}">
+                    <label for="brand-{{ brand.id }}">{{ brand.name }}</label>
+                </div>
+            {% endfor %}
+
+            <label>Warranty:</label>
+            {% for warranty in warranties %}
+                <div>
+                    <input type="checkbox" id="warranty-{{ warranty.id }}" name="warranty" value="{{ warranty.id }}">
+                    <label for="warranty-{{ warranty.id }}">{{ warranty.name }}</label>
+                </div>
+            {% endfor %}
+
+            <label>Seller:</label>
+            {% for seller in sellers %}
+                <div>
+                    <input type="checkbox" id="seller-{{ seller.id }}" name="seller" value="{{ seller.id }}">
+                    <label for="seller-{{ seller.id }}">{{ seller.name }}</label>
+                </div>
+            {% endfor %}
+
+            
+        </form>
+    </div>
+
+    <!-- Product List -->
+    
+    <div class="product-list">
+       
+        {% for product in products %}
+            <div class="product">
+                {% if product.image %}
+                    <img src="{{ product.image.url }}" alt="{{ product.name }}">
+                {% else %}
+                    <p>No image available</p>
+                {% endif %}
+                <h3>{{ product.name }}</h3>
+                <p>BDT: <span class="New-price">{{ product.price }}</span> </p>
+                <p>BDT: <span class="old-price">{{ product.old_price }}</span></p>
+                <div class="buttons">
+                    <button class="buy-now">BUY NOW</button>
+                    <button class="add-to-cart">ADD TO CART</button>
+                </div>
+            </div>
+        {% empty %}
+            <p>No products found.</p>
+        {% endfor %}
+    </div>
+</div>
+</body>
+</html>

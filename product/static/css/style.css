@@ -1,0 +1,112 @@
+.filters {
+    
+    flex-wrap: wrap;
+    
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin-right: 20px; /* Add margin to create space between filters and product list */
+    flex-basis: 10%;
+}
+.filters label {
+    /* flex-basis: 100%; */
+    margin-top: 10px;
+}
+.product-list {
+    display: flex;
+    flex-wrap: wrap;;
+    justify-content: flex-start; /* Align product cards to the left */
+    flex-basis: 90%;
+}
+
+.product {
+    width: 200px;
+    margin-right: 20px;
+    margin-bottom: 20px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+    flex-basis: 200px; /* Set a fixed width for product cards */
+    margin-right: 20px;
+    margin-bottom: 20px;
+   
+}
+
+.product h3 {
+    margin-top: 0;
+}
+
+.product p {
+    margin-bottom: 5px;
+}
+
+
+body {
+    font-family: Arial, sans-serif;
+}
+
+h1, h2 {
+    margin-bottom: 10px;
+}
+
+label {
+    display: inline-block;
+    margin-right: 5px;
+}
+
+select {
+    margin-right: 10px;
+}
+
+input[type="submit"] {
+    margin-top: 10px;
+}
+
+.product-list:after {
+    content: "";
+    flex-grow: 9999;
+}
+
+
+@media screen and (max-width: 768px) {
+    .product {
+        width: 100%;
+        margin-right: 0;
+    }
+}
+
+.container {
+        
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        
+        
+        
+}
+
+h1 {
+    text-align: left;
+    margin-right: auto;
+    /* margin-right: 0 */
+}
+.buttons button.buy-now {
+    margin-right: 10px;
+    background-color: #f75454;
+    color: #ccc;
+}
+
+.buttons button.add-to-cart {
+    background-color: #080808;
+    color: #ccc;
+    
+}
+.old-price {
+    text-decoration: line-through;
+    color: rgb(12, 12, 12);
+}
+.New-price {
+    
+    color: rgb(221, 17, 17);
+}
